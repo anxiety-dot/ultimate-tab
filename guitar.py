@@ -1,16 +1,10 @@
-# Downloads the Tab from ultimateguitar.com 
-
-
-
+# Downloads the Tab from ultimateguitar.com
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import time
-
-# URL of the page to scrape
-url = 'https://tabs.ultimate-guitar.com/tab/merle-travis/sixteen-tons-chords-87127'
 
 def scrape_pre_content(url):
     chrome_options = Options()
@@ -42,7 +36,10 @@ def save_content_to_file(content, filename='pre_content.html'):
         file.write(content)
 
 if __name__ == '__main__':
+    url = input('Enter the URL of the page to scrape: ')
     pre_content = scrape_pre_content(url)
     if pre_content:
         save_content_to_file(pre_content)
         print(f'Successfully scraped and saved content to pre_content.html')
+    else:
+        print('Failed to retrieve content.')
