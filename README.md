@@ -1,4 +1,15 @@
- Downloads the Tab from ultimateguitar.com 
+ Downloads the Tab from your MY Saved Tabs @ ultimateguitar.com 
+
+ how it works:
+ 1. save your ultimate guitar cookie
+ 2. edit guiatrfirst.py to set the cookie path
+ 3. run the program
+ 4. use the filtered list with guitarrunlast.py. if you kep everything together there should be nothing to change. except setting the cookie path again. (Proplay not needed at all, but ill remove it later)
+ 5. Need help just ask!
+
+
+
+
 
 example riff download/
 
