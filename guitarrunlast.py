@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
-from selenium.webdriver.common.keys import Keys
 import time
 import os
 
@@ -54,20 +53,28 @@ def scrape_page(url):
         print(f"Error scraping {url}: {e}")
         return None, None
 
+def get_processed_files():
+    """Get a set of filenames that have already been processed."""
+    return set(os.path.splitext(filename)[0] for filename in os.listdir(OUTPUT_DIR))
+
 def main():
-    with open('filtered_links.txt', 'r') as file:
+    processed_files = get_processed_files()
+
+    with open('filtered_links.txt', 'r', encoding='utf-8') as file:
         urls = file.readlines()
 
     for url in urls:
         url = url.strip()
         if url:
-            print(f"Scraping {url}")
+            print(f"Processing {url}")
             filename, content = scrape_page(url)
             if filename and content:
-                file_path = os.path.join(OUTPUT_DIR, f"{filename}.txt")
-                with open(file_path, 'w') as file:
-                    file.write(f"URL: {url}\n")
-                    file.write(content + "\n\n")
+                if filename not in processed_files:
+                    file_path = os.path.join(OUTPUT_DIR, f"{filename}.txt")
+                    with open(file_path, 'w', encoding='utf-8') as file:
+                        file.write(f"URL: {url}\n")
+                        file.write(content + "\n\n")
+                    processed_files.add(filename)  # Update the set of processed files
             time.sleep(1)  # Be polite and don't hammer the server
 
     driver.quit()
